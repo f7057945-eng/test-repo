@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 05:36 PM
+-- Generation Time: Sep 01, 2025 at 01:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -11,6 +11,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `onlinecakeshop`
@@ -24,9 +29,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cake_shop_admin_registrations` (
   `admin_id` int(11) NOT NULL,
-  `otp` int(11) NOT NULL,
-  `otp_expiry` DATETIME DEFAULT NULL,
-  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `admin_username` varchar(100) NOT NULL,
   `admin_email` varchar(150) NOT NULL,
   `admin_password` varchar(100) NOT NULL
@@ -36,8 +38,9 @@ CREATE TABLE `cake_shop_admin_registrations` (
 -- Dumping data for table `cake_shop_admin_registrations`
 --
 
-INSERT INTO `cake_shop_admin_registrations` (`admin_id`, `admin_username`, `admin_email`, `admin_password`, `otp`, `otp_expiry`, `createdAt`, `updatedAt`) VALUES
-(2, 'aadmin', 'rida86234@gmail.com', 'admin0', 129876, '2025-08-30 12:00:00', NOW(), NOW());
+INSERT INTO `cake_shop_admin_registrations` (`admin_id`, `admin_username`, `admin_email`, `admin_password`) VALUES
+(2, 'aadmin', 'rida86234@gmail.com', 'admin0');
+
 -- --------------------------------------------------------
 
 --
@@ -62,7 +65,6 @@ INSERT INTO `cake_shop_category` (`category_id`, `category_name`, `category_imag
 (5, '𝐃𝐎𝐍𝐔𝐓𝐒', '240728083148.jpg'),
 (6, '𝐈𝐂𝐄-𝐂𝐑𝐄𝐀𝐌𝐒', '240728083221.jfif'),
 (7, '𝐒𝐖𝐄𝐄𝐓𝐒', '240728083242.jfif'),
-(8, '𝐒𝐎𝐅𝐓 𝐃𝐑𝐈𝐍𝐊𝐒', '240728083305.jpg'),
 (9, '𝐒𝐀𝐍𝐃𝐖𝐈𝐂𝐇𝐄𝐒', '240728083510.jpg');
 
 -- --------------------------------------------------------
@@ -84,8 +86,7 @@ CREATE TABLE `cake_shop_orders` (
 --
 
 INSERT INTO `cake_shop_orders` (`orders_id`, `users_id`, `delivery_date`, `payment_method`, `total_amount`) VALUES
-(1, 2, '2020-08-09', 'Cash', '1000'),
-(2, 3, '2024-07-30', 'Cash', '1500');
+(1, 2, '2020-08-09', 'Cash', '1000');
 
 -- --------------------------------------------------------
 
@@ -165,9 +166,9 @@ INSERT INTO `cake_shop_product` (`product_id`, `product_name`, `product_category
 CREATE TABLE `cake_shop_users_registrations` (
   `users_id` int(11) NOT NULL,
   `otp` int(11) NOT NULL,
-  `otp_expiry` DATETIME DEFAULT NULL,
-  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `otp_expiry` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `users_username` varchar(100) NOT NULL,
   `users_email` varchar(150) NOT NULL,
   `users_password` varchar(100) NOT NULL,
@@ -179,9 +180,9 @@ CREATE TABLE `cake_shop_users_registrations` (
 -- Dumping data for table `cake_shop_users_registrations`
 --
 
-INSERT INTO `cake_shop_users_registrations` (`users_id`, `users_username`, `users_email`, `users_password`, `users_mobile`, `users_address`, `otp`, `otp_expiry`, `createdAt`, `updatedAt`) VALUES
-(3, 'iram', 'iram00@gmail.com', '0192023a7bbd73250516f069df18b500', '3231567978', 'dhok bnaras street 15', 123456, '2025-08-30 12:00:00', NOW(), NOW()),
-(5, 'fami', 'f7057945@gmail.com', '92daa86ad43a42f28f4bf58e94667c95', '03231543530', 'fjkcnj',123876, '2025-08-3 12:00:00', NOW(), NOW() );
+INSERT INTO `cake_shop_users_registrations` (`users_id`, `otp`, `otp_expiry`, `createdAt`, `updatedAt`, `users_username`, `users_email`, `users_password`, `users_mobile`, `users_address`) VALUES
+(1, 0, NULL, '2025-08-31 15:57:19', '2025-08-31 15:58:23', 'fami', 'f7057945@gmail.com', 'b2a9a16d67bddbb905264b3136f3c831', '03231543530', 'dhok bnaras'),
+(2, 0, NULL, '2025-08-31 16:00:02', '2025-08-31 16:11:09', 'alina', 'alinaftma345@gmail.com', '8659d1803b968151628dbbdb4428a857', '03215531231', 'shalley valley range road');
 
 --
 -- Indexes for dumped tables
@@ -231,7 +232,7 @@ ALTER TABLE `cake_shop_users_registrations`
 -- AUTO_INCREMENT for table `cake_shop_admin_registrations`
 --
 ALTER TABLE `cake_shop_admin_registrations`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cake_shop_category`
@@ -261,6 +262,9 @@ ALTER TABLE `cake_shop_product`
 -- AUTO_INCREMENT for table `cake_shop_users_registrations`
 --
 ALTER TABLE `cake_shop_users_registrations`
-  MODIFY `users_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `users_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
